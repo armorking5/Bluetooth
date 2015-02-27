@@ -3,35 +3,35 @@
     xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.armorking5.cordova.bluetooth"
-    version="0.2.3">
+    version="0.1.0">
 
     <name>Bluetooth</name>
     <description>Bluetooth Communication Plugin (forked from Tom van Enckevort's Bluetooth Serial Plugin)</description>
     <license>Apache 2.0</license>
     <keywords>bluetooth,communication</keywords>
     <repo>https://github.com/armorking5/Bluetooth.git</repo>
-    <issue>https://github.com/tomvanenckevort/BluetoothSerial/issues</issue>
+    <issue>https://github.com/armorking5/Bluetooth/issues</issue>
 
     <engines>
         <engine name="cordova" version=">=2.9.0" />
     </engines>
 
-    <js-module src="www/bluetoothSerial.js" name="bluetoothSerial">
-        <clobbers target="window.bluetoothSerial" />
+    <js-module src="www/bluetooth.js" name="bluetooth">
+        <clobbers target="window.bluetooth" />
     </js-module>
 
     <platform name="android">
 
         <config-file target="res/xml/config.xml" parent="/widget">
-            <feature name="BluetoothSerial">
-                <param name="android-package" value="com.megster.cordova.BluetoothSerial"/>
+            <feature name="Bluetooth">
+                <param name="android-package" value="com.armorking5.cordova.Bluetooth"/>
             </feature>
         </config-file>
 
-        <source-file src="src/android/com/megster/cordova/BluetoothSerial.java"
-            target-dir="src/com/megster/cordova"/>
-        <source-file src="src/android/com/megster/cordova/BluetoothSerialService.java"
-            target-dir="src/com/megster/cordova"/>
+        <source-file src="src/android/com/armorking5/cordova/Bluetooth.java"
+            target-dir="src/com/armorking5/cordova"/>
+        <source-file src="src/android/com/armorking5/cordova/BluetoothService.java"
+            target-dir="src/com/armorking5/cordova"/>
 
         <!-- kludge for 2.9 -->
         <source-file src="src/android/org/apache/cordova/api/Dummy.java"
@@ -41,27 +41,6 @@
             <uses-permission android:name="android.permission.BLUETOOTH" />
             <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
         </config-file>
-
-    </platform>
-
-    <platform name="ios">
-
-        <config-file target="config.xml" parent="/widget">
-            <feature name="BluetoothSerial">
-                <param name="ios-package" value="MEGBluetoothSerial" onload="true"/>
-            </feature>
-        </config-file>
-
-        <header-file src="src/ios/MEGBluetoothSerial.h" target-dir="BluetoothSerial" />
-        <source-file src="src/ios/MEGBluetoothSerial.m" target-dir="BluetoothSerial" />
-
-        <!-- BLEMini see http://redbearlab.com -->
-        <header-file src="src/ios/BLE.h" target-dir="BluetoothSerial" />
-        <source-file src="src/ios/BLEDefines.h" target-dir="BluetoothSerial" />
-        <source-file src="src/ios/BLE.m" target-dir="BluetoothSerial" />
-
-        <!-- frameworks -->
-        <framework src="CoreBluetooth.framework" />
 
     </platform>
 </plugin>
