@@ -1,19 +1,19 @@
-# Bluetooth Serial Plugin for PhoneGap
+# DEVELOPMENT PHASE
 
-This plugin enables serial communication over Bluetooth. It was written for communicating between Android ~~or iOS and an Arduino~~ another Android device. The only adjusment made from Don Coleman's original code is to enable the _AcceptThread_ for receiving incoming connections.
+# Bluetooth Plugin for PhoneGap
 
-Android uses Classic Bluetooth.  iOS uses Bluetooth Low Energy.
+This plugin enables s
+communication over Bluetooth. It was written for communicating between two Android devices. .
+The original code is taken by Tom van Enckevort
+Android uses Classic Bluetooth
 
 ## Supported Platforms
 
 * Android
-* iOS (with [BLEMini](http://redbearlab.com/blemini))
 
 ## Limitations
 
- * The phone must initiate the Bluetooth connection
  * Data sent over the connection is assumed to be Strings
- * iOS Bluetooth Low Energy requires iPhone 4S, iPhone5, iPod 5, or iPad3+
 
 # Installing 
 
