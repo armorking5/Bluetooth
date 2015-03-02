@@ -5,19 +5,15 @@ import android.bluetooth.BluetoothDevice;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+
+import org.json.JSONException;
+
 // kludgy imports to support 2.9 and 3.0 due to package changes
-import org.apache.cordova.*;
-import org.apache.cordova.api.*;
 // import org.apache.cordova.CordovaArgs;
 // import org.apache.cordova.CordovaPlugin;
 // import org.apache.cordova.CallbackContext;
 // import org.apache.cordova.PluginResult;
 // import org.apache.cordova.LOG;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Set;
 
 /**
  * PhoneGap Plugin for Communication over Bluetooth
@@ -25,8 +21,8 @@ import java.util.Set;
 public class Bluetooth extends CordovaPlugin {
 
     // actions
-    private static final String LIST = "list";
-	private static final String DISCOVERING = "listDevices";
+	private static final String DISCOVERING = "discover";
+	private static final String LIST = "listDevices";
 	private static final String STOP_DISCOVERING = "stopDiscovering";
     private static final String CONNECT = "connect";
     private static final String CONNECT_INSECURE = "connectInsecure";
@@ -81,10 +77,14 @@ public class Bluetooth extends CordovaPlugin {
 
         boolean validAction = true;
         
-        if (action.equals(LIST)) {
-
-            ArrayList<BluetoothDevice> devices = services.discover(callbackContext);
+        if (action.equals(DISCOVERING)) {
+			services.discover();
 			
+        } else if (action.equals(STOP_DISCOVERING)) {
+			services.stopDiscovering();
+
+        } else if (action.equals(LIST)) {
+			services.list();
 
         } else if (action.equals(CONNECT)) {
 
@@ -224,6 +224,9 @@ public class Bluetooth extends CordovaPlugin {
                             break;
                         case BluetoothService.STATE_LISTEN:
                             Log.i(TAG, "BluetoothService.STATE_LISTEN");
+                            break;
+						case BluetoothService.STATE_DISCOVERING:
+                            Log.i(TAG, "BluetoothService.STATE_DISCOVERING");
                             break;
                         case BluetoothService.STATE_NONE:
                             Log.i(TAG, "BluetoothService.STATE_NONE");

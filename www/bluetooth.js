@@ -13,10 +13,11 @@ module.exports = {
     disconnect: function (success, failure) {
         cordova.exec(success, failure, "Bluetooth", "disconnect", []);
     },
-
-    // list devices
-    list: function (success, failure) {
-        cordova.exec(success, failure, "Bluetooth", "list", []);
+    discover: function (discoverid,success, failure) {
+        cordova.exec(success, failure, "Bluetooth", "discover", []);
+		window.setInterval(function(discoverid){
+			
+		},1500);
     },
 
     isEnabled: function (success, failure) {

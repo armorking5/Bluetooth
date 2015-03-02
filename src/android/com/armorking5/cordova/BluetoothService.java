@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
+import java.util.ArrayList;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -49,14 +50,28 @@ public class BluetoothService {
     private ConnectThread mConnectThread;
     private ConnectedThread mConnectedThread;
     private int mState;
+	private ArrayList<String> devices;
 
     // Constants that indicate the current connection state
     public static final int STATE_NONE = 0;       // we're doing nothing
     public static final int STATE_LISTEN = 1;     // now listening for incoming connections
     public static final int STATE_CONNECTING = 2; // now initiating an outgoing connection
-    public static final int STATE_CONNECTED = 3;  // now connected to a remote device
+    public static final int STATE_DISCOVERING = 3; // now discovering devices
+    public static final int STATE_CONNECTED = 4;  // now connected to a remote device
 
-    /**
+    // Create a BroadcastReceiver for receiving Bluetooth devices
+	private final BroadcastReceiver receiverDevices = new BroadcastReceiver() {
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+				BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+				String identify = device.getName()+" "+device.getAddress;
+				if(devices.contains(identify)==-1)
+					devices.add(identify);
+			}
+		}
+	};
+	/**
      * Constructor. Prepares a new Bluetooth session.
      * @param handler  A Handler to send messages back to the UI Activity
      */
@@ -84,7 +99,20 @@ public class BluetoothService {
     public synchronized int getState() {
         return mState;
     }
-
+	
+	
+	private synchronized void discover(String discoverId){
+		
+		// Register the BroadcastReceiver
+		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+		registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
+	
+	}
+	private synchronized void discover(String discoverId){
+		
+		unregisterReceiver(mReceiver);
+	
+	}
     /**
      * Start the chat service. Specifically start AcceptThread to begin a
      * session in listening (server) mode. Called by the Activity onResume() */
@@ -201,6 +229,7 @@ public class BluetoothService {
             mInsecureAcceptThread.cancel();
             mInsecureAcceptThread = null;
         }
+		unregisterReceiver(mReceiver);
         setState(STATE_NONE);
     }
 
