@@ -101,17 +101,22 @@ public class BluetoothService {
     }
 	
 	
-	private synchronized void discover(String discoverId){
-		
-		// Register the BroadcastReceiver
+	private synchronized boolean discover(){
+		mAdapter.cancelDiscovery();
+		boolean ok=mAdapter.startDiscovery();
 		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-		registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
+		registerReceiver(receiverDevices, filter);
+		return ok;
 	
 	}
-	private synchronized void discover(String discoverId){
-		
-		unregisterReceiver(mReceiver);
+	private synchronized void stopDiscovering(){
+		boolean ok=mAdapter.cancelDiscovery();
+		unregisterReceiver(receiverDevices);
+		return ok;
 	
+	}
+	private synchronized ArrayList<String> getDevices(){
+		return devices.toArray();
 	}
     /**
      * Start the chat service. Specifically start AcceptThread to begin a
@@ -229,7 +234,7 @@ public class BluetoothService {
             mInsecureAcceptThread.cancel();
             mInsecureAcceptThread = null;
         }
-		unregisterReceiver(mReceiver);
+		unregisterReceiver(receiverDevices);
         setState(STATE_NONE);
     }
 

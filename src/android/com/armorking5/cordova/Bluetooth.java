@@ -21,6 +21,8 @@ import org.json.JSONException;
 public class Bluetooth extends CordovaPlugin {
 
     // actions
+	private static final String START = "start";
+	private static final String STOP = "stop";
 	private static final String DISCOVERING = "discover";
 	private static final String LIST = "listDevices";
 	private static final String STOP_DISCOVERING = "stopDiscovering";
@@ -76,15 +78,23 @@ public class Bluetooth extends CordovaPlugin {
         }
 
         boolean validAction = true;
-        
-        if (action.equals(DISCOVERING)) {
+        if (action.equals(START)){
+			if (!bluetoothAdapter.isEnabled()) {
+				bluetoothAdapter.enable();
+			}
+		} else if (action.equals(STOP)){
+			if (bluetoothAdapter.isEnabled()) {
+				bluetoothAdapter.disable();
+			}
+		} else if (action.equals(DISCOVERING)) {
 			services.discover();
 			
         } else if (action.equals(STOP_DISCOVERING)) {
 			services.stopDiscovering();
 
         } else if (action.equals(LIST)) {
-			services.list();
+			String[] devices=services.getDevices();
+			callbackContext.success((new JSONArray(devices)).toString());
 
         } else if (action.equals(CONNECT)) {
 

@@ -1,6 +1,13 @@
 /*global cordova*/
+var isDiscovering;
 module.exports = {
-
+	
+	start: function(success,failure){
+		cordova.exec(success,failure,"Bluetooth", "start");
+	},
+	stop: function(success,failure){
+		cordova.exec(success,failure,"Bluetooth", "stop");
+	},
     connect: function (macAddress, success, failure) {
         cordova.exec(success, failure, "Bluetooth", "connect", [macAddress]);
     },
@@ -13,12 +20,21 @@ module.exports = {
     disconnect: function (success, failure) {
         cordova.exec(success, failure, "Bluetooth", "disconnect", []);
     },
-    discover: function (discoverid,success, failure) {
+	/*List devices with JSON string passed to success function repeatedly
+	STRING: name+" "+macAddress
+	*/
+    discover: function (success, failure) {
         cordova.exec(success, failure, "Bluetooth", "discover", []);
-		window.setInterval(function(discoverid){
-			
+		isDiscovering=true;
+		window.setInterval(function(){
+			if(isDiscovering)
+				cordova.exec(success,failure,"Bluetooth","list");
 		},1500);
     },
+	
+	cancelDiscover: function (success,failure){
+		cordova.exec(success,failure,"Bluetooth","stopDiscovering");
+	}
 
     isEnabled: function (success, failure) {
         cordova.exec(success, failure, "Bluetooth", "isEnabled", []);
