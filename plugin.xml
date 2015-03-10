@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<plugin
-    xmlns="http://www.phonegap.com/ns/plugins/1.0"
+<plugin xmlns="https://build.phonegap.com/plugins"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    id="com.armorking5.cordova.bluetooth"
-    version="0.1.0">
+    id="com.armorking5.bluetooth"
+    version="0.5.0">
 
     <name>Bluetooth</name>
     <description>Bluetooth Communication Plugin (forked from Tom van Enckevort's Bluetooth Serial Plugin)</description>
-    <license>Apache 2.0</license>
+    <author>armorking5</author>
+	<license>Apache 2.0</license>
     <keywords>bluetooth,communication</keywords>
     <repo>https://github.com/armorking5/Bluetooth.git</repo>
     <issue>https://github.com/armorking5/Bluetooth/issues</issue>
@@ -16,9 +16,7 @@
         <engine name="cordova" version=">=2.9.0" />
     </engines>
 
-    <js-module src="www/bluetooth.js" name="bluetooth">
-        <clobbers target="window.bluetooth" />
-    </js-module>
+    <asset src="www/bluetooth.js" name="js/bluetooth.js"/>
 
     <platform name="android">
 
@@ -37,7 +35,7 @@
         <source-file src="src/android/org/apache/cordova/api/Dummy.java"
             target-dir="src/org/apache/cordova/api"/>
 
-        <config-file target="AndroidManifest.xml" parent="/manifest">
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <uses-permission android:name="android.permission.BLUETOOTH" />
             <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
         </config-file>

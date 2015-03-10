@@ -3,10 +3,10 @@ var isDiscovering;
 module.exports = {
 	
 	start: function(success,failure){
-		cordova.exec(success,failure,"Bluetooth", "start");
+		cordova.exec(success,failure,"Bluetooth", "start", []);
 	},
 	stop: function(success,failure){
-		cordova.exec(success,failure,"Bluetooth", "stop");
+		cordova.exec(success,failure,"Bluetooth", "stop", []);
 	},
     connect: function (macAddress, success, failure) {
         cordova.exec(success, failure, "Bluetooth", "connect", [macAddress]);
@@ -28,14 +28,18 @@ module.exports = {
 		isDiscovering=true;
 		window.setInterval(function(){
 			if(isDiscovering)
-				cordova.exec(success,failure,"Bluetooth","list");
+				cordova.exec(success,failure,"Bluetooth","list", []);
 		},1500);
     },
 	
 	cancelDiscover: function (success,failure){
-		cordova.exec(success,failure,"Bluetooth","stopDiscovering");
-	}
-
+		cordova.exec(success,failure,"Bluetooth","stopDiscovering", []);
+		isDiscovering=false;
+	},
+	
+	makeDiscoverable: function(time,success,failure){
+		cordova.exec(success,failure,"Bluetooth","makeDiscoverable", [time]);
+	},
     isEnabled: function (success, failure) {
         cordova.exec(success, failure, "Bluetooth", "isEnabled", []);
     },

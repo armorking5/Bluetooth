@@ -109,11 +109,16 @@ public class BluetoothService {
 		return ok;
 	
 	}
-	private synchronized void stopDiscovering(){
+	private synchronized boolean stopDiscovering(){
 		boolean ok=mAdapter.cancelDiscovery();
 		unregisterReceiver(receiverDevices);
 		return ok;
 	
+	}
+	private synchronized void makeDiscoverable(int time){
+		Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+		discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, time);
+		startActivity(discoverableIntent);
 	}
 	private synchronized ArrayList<String> getDevices(){
 		return devices.toArray();

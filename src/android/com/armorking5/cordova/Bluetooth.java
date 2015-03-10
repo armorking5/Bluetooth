@@ -26,6 +26,7 @@ public class Bluetooth extends CordovaPlugin {
 	private static final String DISCOVERING = "discover";
 	private static final String LIST = "listDevices";
 	private static final String STOP_DISCOVERING = "stopDiscovering";
+	private static final String MAKE_DISCOVERABLE = "makeDiscoverable";
     private static final String CONNECT = "connect";
     private static final String CONNECT_INSECURE = "connectInsecure";
     private static final String DISCONNECT = "disconnect";
@@ -91,8 +92,11 @@ public class Bluetooth extends CordovaPlugin {
 			
         } else if (action.equals(STOP_DISCOVERING)) {
 			services.stopDiscovering();
-
-        } else if (action.equals(LIST)) {
+			
+        } else if(action.equals(MAKE_DISCOVERABLE)){
+			services.makeDiscoverable(args.getInt(0));
+			
+		}else if (action.equals(LIST)) {
 			String[] devices=services.getDevices();
 			callbackContext.success((new JSONArray(devices)).toString());
 
