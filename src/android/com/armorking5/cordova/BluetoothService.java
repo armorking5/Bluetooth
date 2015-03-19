@@ -15,7 +15,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import org.apache.cordova.*;
-import org.apache.cordova.api.*;
 /**
  * This class does all the work for setting up and managing Bluetooth
  * connections with other devices. It has a thread that listens for

@@ -5,7 +5,7 @@ import android.bluetooth.BluetoothDevice;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-
+import org.apache.cordova.*;
 import org.json.JSONException;
 
 // kludgy imports to support 2.9 and 3.0 due to package changes
