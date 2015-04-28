@@ -2,13 +2,13 @@
 <plugin xmlns="https://build.phonegap.com/plugins"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.armorking5.bluetooth"
-    version="0.5.0">
+    version="0.9.0">
 
     <name>Bluetooth</name>
     <description>Bluetooth Communication Plugin (forked from Tom van Enckevort's Bluetooth Serial Plugin)</description>
     <author>armorking5</author>
 	<license>Apache 2.0</license>
-    <keywords>bluetooth,communication</keywords>
+    <keywords>bluetooth,communication,android</keywords>
     <repo>https://github.com/armorking5/Bluetooth.git</repo>
     <issue>https://github.com/armorking5/Bluetooth/issues</issue>
 
@@ -16,20 +16,25 @@
         <engine name="cordova" version=">=2.9.0" />
     </engines>
 
-    <asset src="www/bluetooth.js" target="bluetooth.js"/>
+    <js-module src="www/bluetooth.js" name="Bluetooth">
+        <clobbers target="window.bluetooth" />
+    </js-module>
 
     <platform name="android">
 
-        <config-file target="res/xml/config.xml" parent="/widget">
+        <config-file target="res/xml/config.xml" parent="/*">
             <feature name="Bluetooth">
-                <param name="android-package" value="com.armorking5.cordova.Bluetooth"/>
+                <param name="android-package" value="com.armorking5.bluetooth.Bluetooth"/>
+            </feature>
+			<feature name="BluetoothService">
+                <param name="android-package" value="com.armorking5.bluetooth.BluetoothService"/>
             </feature>
         </config-file>
 
-        <source-file src="src/android/com/armorking5/cordova/Bluetooth.java"
-            target-dir="src/com/armorking5/cordova"/>
-        <source-file src="src/android/com/armorking5/cordova/BluetoothService.java"
-            target-dir="src/com/armorking5/cordova"/>
+        <source-file src="src/android/Bluetooth.java"
+            target-dir="src/com/armorking5/bluetooth"/>
+        <source-file src="src/android/BluetoothService.java"
+            target-dir="src/com/armorking5/bluetooth"/>
 			
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.BLUETOOTH" />

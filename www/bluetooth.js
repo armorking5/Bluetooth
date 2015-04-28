@@ -1,6 +1,6 @@
 /*global cordova*/
 var isDiscovering;
-var Bluetooth = {
+bluetooth = {
 	
 	start: function(success,failure){
 		cordova.exec(success,failure,"Bluetooth", "start", []);
@@ -84,4 +84,4 @@ var Bluetooth = {
     }
 
 };
-module.exports = Bluetooth;
+module.exports=bluetooth;
