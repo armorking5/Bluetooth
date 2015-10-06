@@ -390,3 +390,7 @@ An example a properly formatted mac address is ``AA:BB:CC:DD:EE:FF``
 ## Feedback
     
 Try the code. If you find an problem or missing feature, file an issue or create a pull request.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/armorking5/bluetooth/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
